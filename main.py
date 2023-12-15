@@ -7,14 +7,16 @@ from tkinter.ttk import Label, Entry
 from Raschet import schet
 from Raschet import schetik
 from tkinter.messagebox import showerror
+from anketa import anketa
 
 # Окно приложения
 window = Tk()
 window.title("Ипотечный калькулятор для юридических лиц")
-window.geometry('750x100')
+window.geometry('850x200')
 
 # Функция расчета
 def raschet():
+
     # Извлечение введенных данных, преобразование их в нужные нам типы
     # Проверка данных на правильность ввода
     try:
@@ -24,32 +26,32 @@ def raschet():
     except ValueError:
         showerror("ОШИБКА!", "Данные введены некорректно!")
         return [None]
-
+    
     # Проверка данных на правильность ввода
     if znachsum < 0:
         showerror("ОШИБКА!", "Сумма кредита не должна быть меньше нуля!")
         return [None]
-
+    
     if znachproz < 0:
         showerror("ОШИБКА!", "Значение процента не должно быть меньше нуля!")
         return [None]
-
+    
     if znachproz < 0:
         showerror("ОШИБКА!", "Значение срока кредита не должно быть меньше нуля!")
         return [None]
-
+    
     # переводим проценты в десятичную дробь
     znachproz=znachproz/100
 
     # превращаем года в месяцы, если выбрана первая радиокнопка
     if viddati.get() == False:
         znachsrok=znachsrok*12
-
+    
     # Считывание вида платежа с радиокнопки и его расчет
     if vidcredita.get() == True:
 
-        # Дифференциальный платеж
-
+    # Дифференциальный платеж
+    
         # Создание окна вывода информации и таблицы
         root=Tk()
         root.title("Таблица дифференцированных платежей (Общие выплаты в конце)")
@@ -65,7 +67,7 @@ def raschet():
         (schet(znachsum, znachproz, znachsrok, table))
 
     else:
-        # Аннуитетный платеж
+    # Аннуитетный платеж
         # Создание окна вывода информации
         root2=tk.Tk()
         root2.title("Результаты расчетов по аннуитетным платежам")
@@ -125,5 +127,8 @@ anue = Radiobutton(text='Аннуитетный', variable=vidcredita, value=Fal
 differ = Radiobutton(text='Дифференцированный', variable=vidcredita, value=True)
 anue.grid(column=2, row=0)
 differ.grid(column=3, row=0)
+
+btninfo = ttk.Button(window, text="Информация о разработчиках", command=anketa)
+btninfo.grid(column=2, row=9)
 
 window.mainloop()
